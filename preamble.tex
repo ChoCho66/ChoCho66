@@ -80,6 +80,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% 課本形式的頁碼 在左右上角 
 % read https://bookdown.org/yihui/rmarkdown-cookbook/latex-header.html
 \usepackage{fancyhdr}   
 % \fancypagestyle{plain}{%
@@ -94,6 +95,23 @@
 
 
 
+%%%%% 論文形式的頁碼 
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% % center of header
+% %\fancyhead[CO,CE]{Your Document Header}
+% \fancyhead{}
+
+% % center of footer
+% %\fancyfoot[CO,CE]{\thepage}
+% \cfoot{\thepage}
+
+% % page number on the left of even pages and right of odd pages
+% %\fancyfoot[LE,RO]{\thepage}
+
+% \thispagestyle{fancy}
+
+% \renewcommand{\headrulewidth}{0pt}% Default \headrulewidth is 0.4pt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -211,3 +229,6 @@
 
 % pdfpages
 \usepackage{pdfpages}
+
+
+\usepackage[style=authoryear,backend=biber]{biblatex}
