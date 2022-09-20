@@ -1,3 +1,14 @@
+## r setup
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
+                    engine.path = list(
+                      python = 'C:/Users/ChoCho/miniconda3/python.exe',
+                      stata = 'C:/Program Files (x86)/Stata15/StataSE-64.exe'
+                      ))
+library(reticulate)
+#source("https://raw.githubusercontent.com/ChoCho66/ChoCho66/main/_common.R")
+
+
+
 # example R options set globally
 options(width = 60)
 
