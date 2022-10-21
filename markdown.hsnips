@@ -1,0 +1,201 @@
+global
+
+const greek  = {
+    "al" : "\\alpha",
+    "be" : "\\beta",
+    "chi" : "\\chi",
+    "del" : "\\delta",
+    "eps" : "\\varepsilon",
+    // "ve": "\\varepsilon",
+    "phi" : "\\phi",
+    // "vf" : "\\varphi",
+    "ga" : "\\gamma",
+    "eta" : "\\eta",
+    // "i" : "\\iota",
+    "vphi" : "\\varphi",
+    "ka" : "\\kappa",
+    "vka": "\\varkappa",
+    "lam" : "\\lambda",
+    "mu" : "\\mu",
+    "nu" : "\\nu",
+    "omi" : "\\omicron",
+    "pi" : "\\pi",
+    "vpi" : "\\varpi",
+    "the" : "\\theta",
+    "vthe" : "\\vartheta",
+    "rho" : "\\rho",
+    "sig" : "\\sigma",
+    "vsig" : "\\varsigma",
+    "tau" : "\\tau",
+    // "u" : "\\upsilon",
+    "ome" : "\\omega",
+    "xi" : "\\xi",
+    "psi" : "\\psi",
+    "ze" : "\\zeta",
+    "Al" : "\\Alpha",
+    "Be" : "\\Beta",
+    "Chi" : "\\Chi",
+    "Del" : "\\Delta",
+    // "Eps" : "\\Epsilon",
+    "Phi" : "\\Phi",
+    "Ga" : "\\Gamma",
+    // "Eta" : "\\Eta",
+    // "I" : "\\Iota",
+    "Ka" : "\\Kappa",
+    "Lam" : "\\Lambda",
+    "Mu" : "\\Mu",
+    "Nu" : "\\Nu",
+    "Omi" : "\\Omicron",
+    "Pi" : "\\Pi",
+    "The" : "\\Theta",
+    "Rho" : "\\Rho",
+    "Sig" : "\\Sigma",
+    "Tau" : "\\Tau",
+    // "U" : "\\Upsilon",
+    "Ome" : "\\Omega",
+    "Xi" : "\\Xi",
+    "Psi" : "\\Psi",
+    "Ze" : "\\Zeta",
+};
+
+const prefix = {
+  "bar" : "overline",
+  "til" : "widetilde",
+  "hat" : "widehat",
+  //
+  // "..." : "cdots",
+  "oo" : "infty",
+  "X" : "times",
+  "grad" : "nabla",
+  "d" : "partial",
+  "setm" : "backslash",
+  "of" : "circ",
+    // "bar" : ["\\\\overline{"             ,"}"   ],
+    // "fn"  : ["\\\\overset{\\\\frown}{"   ,"}"   ],
+    // "td"  : ["\\\\widetilde{"            ,"}"   ],
+    // "rm"  : ["\\\\mathrm{"               ,"}"   ],
+    // "hat" : ["\\\\hat{"                  ,"}"   ],
+    // "cr"  : ["\\\\mathscr{"              ,"}"   ],
+    // "bav" : ["\\\\hat{\\\\boldsymbol{"   ,"}}"  ],
+    // "vec" : ["\\\\vec{"                  ,"}"   ],
+    // "bm"  : ["\\\\boldsymbol{"           ,"}"   ],
+    // "bf"  : ["\\\\mathbf{"               ,"}"   ],
+    // "cal" : ["\\\\mathcal{"              ,"}"   ],
+    // "dot"  : ["\\\\dot{"                  ,"}"   ],
+    // "vdot" : ["\\\\dot{\\\\boldsymbol{"   ,"}}"  ]
+};
+
+const prefixmath = {
+  "bb" : "mathbb",
+  "bf" : "mathbf",
+  "cal" : "mathcal",
+  "rm" : "mathrm",
+  "frak" : "mathfrak",
+  "tt" : "mathtt",
+};
+
+endglobal
+
+
+
+# == Some notation ==
+
+priority 200
+snippet // "Fraction" iAm
+\\frac{${1:${VISUAL}}}{$2}$0
+endsnippet
+
+# 數字大的先
+priority 300
+snippet d// "Fraction" iAm
+\\dfrac{${1:${VISUAL}}}{$2}$0
+endsnippet
+
+snippet `\b(?<!\\)(bb|bf|cal|rm|frak|tt)\b` "mathbb,...," iAm
+\\math``rv=m[1]``{${1:${VISUAL}}}$0
+endsnippet
+
+snippet `\b(?<!\\)opn\b` "operatorname" iAm
+\\operatorname{${1:${VISUAL}}}$0
+endsnippet
+
+snippet `(?<!\S)([a-zA-Z])(bb|bf|cal|rm|frak|tt)\b` "mathbb by a word" iAm
+\\math``rv=m[2]``{``rv = m[1]``}
+endsnippet
+
+snippet `(?<!\S)([A-Z])\1\b` "mathbb" iAm
+\\mathbb ``rv=m[1]`` 
+endsnippet
+
+snippet `\b(?<!\\)(bar|til|hat)\b` "prefix with variable" iAm
+\\``rv = prefix[m[1]]``{${VISUAL}$1}
+endsnippet
+
+snippet `\b(?<!\\)(oo|grad|setm|of)\b` "prefix without \" iAm
+\\``rv = prefix[m[1]]``
+endsnippet
+
+snippet `\\(d|X)\b` "prefix need \" iAm
+\\``rv = prefix[m[1]]``
+endsnippet
+#snippet `(?<!\S)\\(d|X)\b` "prefix need \" iAm
+
+snippet `\\\.\.\.` "prefix need \" iAm
+\\cdots
+endsnippet
+
+# ==== Auto Capture Hat Operation ====
+#snippet `^\s(bar)` "bar" iAm
+#``rv = ``\\overline{${1:${VISUAL}}$2}
+#endsnippet
+
+#snippet til "til" iAm
+#snippet `([^\\])(til)` "bar" iAm
+#``rv = m[1]``\\widetilde{${VISUAL}$1}
+#endsnippet
+
+
+priority 100
+snippet `(\\?[a-zA-Z]\w*({?\w*})?)(bf|BF)` "mathbf" iAm
+\mathbf{``rv = m[1]``}
+endsnippet
+
+snippet `(\\?[a-zA-Z]\w*({?\w*})?)(htd|TD)` "tilde" iAm
+\tilde{``rv = m[1]``}
+endsnippet
+
+#snippet `(^(?!\\).*)(test)` "test" iAm
+#``rv = m[1]+"___"+m[2]+"_____"``
+#endsnippet
+#\\frac{${TM_SELECTED_TEXT}$1}{$2}$0
+
+
+
+
+
+
+
+
+
+#snippet `^((?!\\[a-z]*test).)*$` "test" iAm
+#$TM_SELECTED_TEXT
+#endsnippet
+
+
+
+snippet `([A-Za-z])(\d)` "auto subscript" iAm
+`` rv = m[1] + "_" + m[2]``
+endsnippet
+
+
+snippet filename "Current Filename"
+``rv = require('path').basename(path)``
+endsnippet
+
+snippet test "test" iAm
+TTT
+endsnippet
+
+#``rv=require("vscode").window.activeTextEditor.document.fileName``
+
+
