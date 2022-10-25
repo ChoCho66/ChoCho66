@@ -67,7 +67,7 @@ const prefix = {
   "oo" : "infty",
   "X" : "times",
   "grad" : "nabla",
-  "d" : "partial",
+  "dd" : "partial",
   "setm" : "backslash",
   "of" : "circ",
     // "bar" : ["\\\\overline{"             ,"}"   ],
@@ -92,6 +92,7 @@ const prefixmath = {
   "rm" : "mathrm",
   "frak" : "mathfrak",
   "tt" : "mathtt",
+  "opn" : "operatorname",
 };
 
 endglobal
@@ -111,58 +112,47 @@ snippet d// "Fraction" iAm
 \\dfrac{${1:${VISUAL}}}{$2}$0
 endsnippet
 
-snippet `\b(?<!\\)(bb|bf|cal|rm|frak|tt)\b` "mathbb,...," iAm
-\\math``rv=m[1]``{${1:${VISUAL}}}$0
+snippet `\b(?<!\\)(bb|bf|cal|rm|frak|tt|opn)\b` "mathbb by VISUAL" iAm
+\\``rv=prefixmath[m[1]]``{${1:${VISUAL}}}$0
 endsnippet
 
-snippet `\b(?<!\\)opn\b` "operatorname" iAm
-\\operatorname{${1:${VISUAL}}}$0
+snippet `\b(?<!\\)([a-zA-Z]{1})(bb|bf|cal|rm|frak|tt|opn)\b` "mathbb by a word" iAm
+\\``rv=prefixmath[m[2]]``{``rv=m[1]``}$0
 endsnippet
 
-snippet `(?<!\S)([a-zA-Z])(bb|bf|cal|rm|frak|tt)\b` "mathbb by a word" iAm
-\\math``rv=m[2]``{``rv = m[1]``}
+snippet `\b([A-Z])\1\b` "mathbb X by XX" iAm
+\\mathbb ``rv=m[1]``
 endsnippet
 
-snippet `(?<!\S)([A-Z])\1\b` "mathbb" iAm
-\\mathbb ``rv=m[1]`` 
+snippet `\b(?<!\\)([a-zA-Z]{1})(bar|til|hat)\b` "prefix by a word" iAm
+\\``rv=prefix[m[2]]``{``rv = m[1]``}$0
 endsnippet
 
-snippet `\b(?<!\\)(bar|til|hat)\b` "prefix with variable" iAm
+snippet `\b(?<!\\)(bar|til|hat)\b` "prefix by by VISUAL" iAm
 \\``rv = prefix[m[1]]``{${VISUAL}$1}
 endsnippet
 
-snippet `\b(?<!\\)(oo|grad|setm|of)\b` "prefix without \" iAm
-\\``rv = prefix[m[1]]``
+snippet `\\(al|be|chi|del|eps|phi|ga|eta|vphi|ka|vka|lam|mu|nu|omi|pi|vpi|the|vthe|rho|sig|vsig|tau|ome|xi|psi|ze|Al|Be|Chi|Del|Phi|Ga|Ka|Lam|Mu|Nu|Omi|Pi|The|Rho|Sig|Tau|Ome|Xi|Psi|Ze)\b` "greek need \" iAm
+``rv = greek[m[1]]``
 endsnippet
 
-snippet `\\(d|X)\b` "prefix need \" iAm
+#snippet `\b(?<!\\)(oo|grad|setm|of)\b` "prefix without \" iAm
+#\\``rv = prefix[m[1]]``
+#endsnippet
+
+snippet `\\(oo|grad|setm|of|dd|X)\b` "prefix need \" iAm
 \\``rv = prefix[m[1]]``
 endsnippet
 #snippet `(?<!\S)\\(d|X)\b` "prefix need \" iAm
 
-snippet `\\\.\.\.` "prefix need \" iAm
+snippet \... "prefix need \" iAm
 \\cdots
 endsnippet
-
-# ==== Auto Capture Hat Operation ====
-#snippet `^\s(bar)` "bar" iAm
-#``rv = ``\\overline{${1:${VISUAL}}$2}
-#endsnippet
 
 #snippet til "til" iAm
 #snippet `([^\\])(til)` "bar" iAm
 #``rv = m[1]``\\widetilde{${VISUAL}$1}
 #endsnippet
-
-
-priority 100
-snippet `(\\?[a-zA-Z]\w*({?\w*})?)(bf|BF)` "mathbf" iAm
-\mathbf{``rv = m[1]``}
-endsnippet
-
-snippet `(\\?[a-zA-Z]\w*({?\w*})?)(htd|TD)` "tilde" iAm
-\tilde{``rv = m[1]``}
-endsnippet
 
 #snippet `(^(?!\\).*)(test)` "test" iAm
 #``rv = m[1]+"___"+m[2]+"_____"``
@@ -190,10 +180,6 @@ endsnippet
 
 snippet filename "Current Filename"
 ``rv = require('path').basename(path)``
-endsnippet
-
-snippet test "test" iAm
-TTT
 endsnippet
 
 #``rv=require("vscode").window.activeTextEditor.document.fileName``
