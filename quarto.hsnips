@@ -174,9 +174,6 @@ snippet `([A-Za-z])(\d)` "auto subscript" iAm
 endsnippet
 
 
-
-
-
 snippet filename "Current Filename"
 ``rv = require('path').basename(path)``
 endsnippet
