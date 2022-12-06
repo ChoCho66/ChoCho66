@@ -1,0 +1,328 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    // {
+    //     "key": "alt+u",                   // whatever keybinding you want
+    //     "command": "editor.action.insertSnippet",
+    //     "when": "editorTextFocus",
+    //     "args": {
+    //         "snippet": "${TM_SELECTED_TEXT/(,|\\.)(?!\\w) /$1\n/g}",
+    //     }
+    // },
+    // {
+    //     "key": "ctrl+8",
+    //     "command": "editor.action.insertSnippet",
+    //     "args": {
+    //         "snippet": "${TM_SELECTED_TEXT/[+\\/]+//g}"
+    //     },
+    //     // remove all "/"
+    // },
+    // {
+    //     "key": "alt+s", // whatever keybinding you want 
+    //     "command": "findInCurrentFile",
+    //     "args": {
+    //         // 2 finds and 2 replaces
+    //         "find": [
+    //             "(^[ \t]*\\/\\*\\*\n)([\\s\n\\S]*?)(^\\s*\\*\\/\n)",
+    //             "^([ \t]*) \\*\\s*(.*)"
+    //         ],
+    //         "replace": [
+    //             "$2",
+    //             "$1$2"
+    //         ],
+    //         "isRegex": true,
+    //         //   "cursorMoveSelect": "$1$2",      // select the result for the postCommands to act on
+    //         "postCommands": [
+    //             "editor.action.commentLine",
+    //             "cancelSelection"
+    //         ]
+    //     },
+    // },
+    // {
+    //     "key": "alt+m", // choose some keybinding
+    //     "command": "editor.action.insertSnippet",
+    //     "args": {
+    //         "snippet": "${TM_SELECTED_TEXT/.*\\.component(.*)/dough.${1:/downcase}/}"
+    //     },
+    // },
+    // {
+    //     "key": "ctrl+4",
+    //     "command": "editor.action.insertSnippet",
+    //     "args": {
+    //         "snippet": "$$TM_SELECTED_TEXT$0$"
+    //     },
+    //     "when": "editorTextFocus"
+    // },
+    {
+        "key": "ctrl+4",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "$${1:$TM_SELECTED_TEXT}$$0"
+            // "snippet": "$$TM_SELECTED_TEXT$1$$0"
+        },
+        "when": "editorTextFocus && isWindows"
+    },
+    {
+        "key": "cmd+4",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "$${1:$TM_SELECTED_TEXT}$$0"
+            // "snippet": "$$TM_SELECTED_TEXT$1$$0"
+        },
+        "when": "editorTextFocus && isMac"
+    },
+    // ${1:$TM_SELECTED_TEXT}
+    // {
+    //     "key": "Ctrl+Shift+m",
+    //     "command": "type",
+    //     "args": { "text": " %>% " },
+    //     "when": "editorTextFocus"
+    // },
+    {
+        "key": "Ctrl+Shift+m",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": " %>% "
+        },
+        "when": "editorTextFocus && isWindows"
+    },
+    {
+        "key": "cmd+Shift+m",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": " %>% "
+        },
+        "when": "editorTextFocus && isMac"
+    },
+    {
+        "key": "alt+oem_minus",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": " <- "
+        },
+        "when": "editorTextFocus && isWindows"
+    },
+    // {
+    //     "key": "alt+m", // or whatever binding you choose
+    //     "command": "cursorMove",
+    //     "args": {
+    //         "to": "viewPortCenter"
+    //     }
+    // },
+    {
+        "key": "ctrl+oem_minus",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "_{${1:$TM_SELECTED_TEXT}}$0"
+        },
+        "when": "editorTextFocus && isWindows"
+    },
+    {
+        "key": "cmd+oem_minus",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "_{${1:$TM_SELECTED_TEXT}}$0"
+        },
+        "when": "editorTextFocus && isMac"
+    },
+    {
+        "key": "ctrl+6",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "^{${1:$TM_SELECTED_TEXT}}$0"
+        },
+        "when": "editorTextFocus && isWindows"
+    },
+    {
+        "key": "cmd+6",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "^{${1:$TM_SELECTED_TEXT}}$0"
+        },
+        "when": "editorTextFocus && isMac"
+    },
+    {
+        "description": "rmarkdown render",
+        "key": "ctrl+F4",
+        "command": "r.runCommandWithEditorPath",
+        "when": "editorTextFocus",
+        "args": "rmarkdown::render(\"$$\", clean = TRUE) && isWindows"
+    },
+    {
+        "description": "bookdown to html",
+        "key": "ctrl+alt+u",
+        "command": "r.runCommandWithEditorPath",
+        "when": "editorTextFocus",
+        "args": "bookdown::render_book(\"$$\") && isWindows"
+    },
+    {
+        "description": "blogdown",
+        "key": "ctrl+alt+y",
+        "command": "r.runCommand",
+        "when": "editorTextFocus",
+        "args": "blogdown::serve_site() && isWindows"
+    },
+    {
+        "description": "bookdown_pdf",
+        "key": "ctrl+F1",
+        "command": "r.runCommand",
+        "when": "editorTextFocus",
+        "args": "rmarkdown::render_site(output_format = 'bookdown::pdf_book', encoding = 'UTF-8') && isWindows"
+        // "args": "rmarkdown::render_site(output_format = 'bookdown::bs4_book', encoding = 'UTF-8')"
+    },
+    // {
+    //     "description": "jupyter to slide",
+    //     "key": "ctrl+F1",
+    //     "command": "r.runCommand",
+    //     "when": "editorTextFocus",
+    //     "args": "rmarkdown::render_site(output_format = 'bookdown::pdf_book', encoding = 'UTF-8')"
+    //     // "args": "rmarkdown::render_site(output_format = 'bookdown::bs4_book', encoding = 'UTF-8')"
+    // },
+    // --to slides --post serve
+    // {
+    //     "key": "ctrl+p",
+    //     "command": "workbench.action.terminal.sendSequence",
+    //     "args": {
+    //         "text": "pandoc -f markdown -t json -o ast.json ast.md"
+    //     }
+    // },
+    // {
+    //     "key": "ctrl+shift+.",
+    //     "command": "md-shortcut.toggleCitations",
+    //     "when": "editorTextFocus",
+    // },
+    // {
+    //     "key": "ctrl+shift+oem_6",
+    //     "command": "cursorMove",
+    //     "args": {
+    //         // "to": "wrappedLineColumnCenter",
+    //         "to": "viewPortCenter",
+    //         "select": true // default is false
+    //     }
+    // },
+    // {
+    //     "key": "ctrl+shift+oem_5",
+    //     "command": "editor.action.jumpToBracket",
+    //     "when": "editorTextFocus"
+    // },
+    // {
+    //     "key": "ctrl+shift+space",
+    //     "command": "editor.action.smartSelect.grow",
+    //     "when": "editorTextFocus"
+    // },
+    // {
+    //     "key": "alt+x",
+    //     "command": "cursorMove",
+    //     //"command": "extension.multiCommand.execute",
+    //     "args": {
+    //         "sequence": [
+    //             "cursorDown",
+    //             "cursorDown",
+    //             "cursorDown"
+    //         ]
+    //     }
+    // },
+    // {
+    //     // "key": "ctrl+numpad6",             // whatever keybinding you want 
+    //     "key": "ctrl+l", // whatever keybinding you want 
+    //     "when": "editorTextFocus",
+    //     "command": "moveby.regex",
+    //     "args": [
+    //         "movePastTag", // go past the next ending tag
+    //         "moveby}",
+    //         "next",
+    //         "start"
+    //     ],
+    //     "when": "editorTextFocus && markdownShortcuts:enabled"
+    //     // "when": "editorTextFocus && editorLangId == html"  // to restrict it to html files
+    // },
+    // {
+    //     // "key": "ctrl+numpad4",             // whatever keybinding you want 
+    //     "key": "ctrl+j", // whatever keybinding you want 
+    //     "when": "editorTextFocus",
+    //     "command": "moveby.regex",
+    //     "args": [
+    //         "movePastTag", // go past the next ending tag
+    //         "moveby{", // ctrl+shift+p  > settings.json 
+    //         "prev",
+    //         "end"
+    //     ],
+    //     "when": "editorTextFocus && markdownShortcuts:enabled"
+    //     // "when": "editorTextFocus && editorLangId == html"  // to restrict it to html files
+    // },
+    {
+        "key": "shift+enter",
+        "command": "quarto.runCurrentCell",
+        "when": "editorTextFocus && editorLangId == markdown || editorLangId == quarto && !findInputFocussed && !replaceInputFocussed"
+    },
+    {
+        "key": "s",
+        "command": "jupyter-slideshow.switchSlideType",
+        "when": "notebookEditorFocused && !inputFocus"
+    },
+    {
+        "key": "t",
+        "command": "jupyter-cell-tags.addTag",
+        "when": "notebookEditorFocused && !inputFocus"
+    },
+    {
+        "key": "ctrl+k v",
+        "command": "markdown-preview-enhanced.openPreviewToTheSide",
+        "when": "!notebookEditorFocused && editorLangId == markdown || editorLangId == quarto || editorLangId == rmarkdown || editorLangId == markdown && isWindows"
+    },
+    {
+        "key": "shift+enter",
+        "command": "-quarto.runSelection",
+        "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'quarto'"
+    },
+    {
+        "key": "cmd+y",
+        "command": "redo",
+        "when": "isMac"
+    },
+    {
+        "key": "shift+cmd+z",
+        "command": "-redo",
+        "when": "isMac"
+    },
+    // {
+    //     "key": "ctrl+k alt+t",
+    //     "command": "translates.hover",
+    //     "when": "editorTextFocus"
+    // },
+    // {
+    //     "key": "ctrl+k alt+t",
+    //     "command": "-translates.hover",
+    //     "when": "editorTextFocus"
+    // },
+    // {
+    //     "key": "shift+enter",
+    //     "command": "markdown-preview-enhanced.runCodeChunk",
+    //     "when": "editorLangId == 'markdown'"
+    // },
+    // {
+    //     "key": "alt+d",
+    //     "command": "findInCurrentFile",
+    //     "args": {
+    //       "replace": [
+    //         "$${",
+    //           "const date = new Date();",
+    //           "const options = { weekday: 'short', month: 'short', year: 'numeric', day: 'numeric',  hour: 'numeric',  minute: 'numeric',  second: 'numeric'};",
+    //           "let str = `${'#'} ` +  new Intl.DateTimeFormat('en-US', options).format(date) + ' ';",
+    //           "return str.padEnd(70, '-');",    // padEnd with ---, whatever final length you want
+    //         "}$$"
+    //       ],
+    //       "restrictFind": "line",
+    //       "postCommands": "cancelSelection"
+    //     },
+    //     "when": "editorLangId == r"
+    // },
+]
+/*
+"when": "editorTextFocus && !editorReadonly"
+
+{
+  "key": "shift+alt+a",
+  "command": "editor.action.blockComment",
+  "when": "editorTextFocus && !editorReadonly"
+}
+*/
