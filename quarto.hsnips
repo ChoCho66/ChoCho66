@@ -1,61 +1,128 @@
 global
 
+// JavaScript code
+function gen_matrix(nrow, ncol) {
+	let results = "";
+	let order = 1;
+	for (var i=0; i < nrow; i++){
+		results += ' ';
+		for(var j = 0; j < ncol - 1; j++){
+			results += "$" + (order).toString() + " & ";
+			order ++;
+		}
+		results += "$" + (order).toString() + " \\\\" + "\\";
+		order ++;
+	}
+	return results;
+}
+
+function gen_matrix_transposed(nrow, ncol) {
+	let results = "";
+	for (var i = 0; i < nrow; i++){
+		results += ' ';
+        var j = 0;
+		for(; j < ncol - 1;j++){
+			results += "$" + (i + j * ncol + 1).toString() + " & ";
+		}
+		results += "$" + (i + j * ncol + 1).toString() + " \\\\" + "\\";
+	}
+	return results;
+}
+
+function tes_matrix(nrow, ncol,t) {
+	let results = "";
+	let order = 1;
+	for (var i=0; i<nrow; i++){
+		results += '	';
+		for(var j = 0;j <ncol-1;j++){
+			if (order > 1 ){
+				results += "${" +(order ).toString() + ":" + t[order-2] + "}\t & ";
+			}
+			else{
+				results += "$" +(order ).toString()  + " & ";
+			}
+			order ++;
+		}
+		results += "$"+(order).toString() +" \\\\" + "\\ ";
+		order ++;
+	}
+	return results;
+}
+
+// 输出一个表格
+function createTable(rows, cols) {
+    let ret = "";
+    let order = 1;
+    for (let i = 0; i < parseInt(rows) + 2; i++) {
+        for (let j = 0; j < parseInt(cols); j++) {
+            if (i === 1) {
+                ret += "|---";
+            } else {
+                ret += "| $" + (order).toString() + " ";
+                order++;
+            }
+        }
+        ret += "|\n"
+    }
+    return ret;
+}
+
 const greek  = {
-    "al" : "\\alpha",
-    "be" : "\\beta",
-    "chi" : "\\chi",
-    "del" : "\\delta",
-    "eps" : "\\varepsilon",
-    // "ve": "\\varepsilon",
-    "phi" : "\\phi",
-    // "vf" : "\\varphi",
-    "ga" : "\\gamma",
-    "eta" : "\\eta",
-    // "i" : "\\iota",
-    "vphi" : "\\varphi",
-    "ka" : "\\kappa",
-    "vka": "\\varkappa",
-    "lam" : "\\lambda",
-    "mu" : "\\mu",
-    "nu" : "\\nu",
-    "omi" : "\\omicron",
-    "pi" : "\\pi",
-    "vpi" : "\\varpi",
-    "the" : "\\theta",
-    "vthe" : "\\vartheta",
-    "rho" : "\\rho",
-    "sig" : "\\sigma",
-    "vsig" : "\\varsigma",
-    "tau" : "\\tau",
-    // "u" : "\\upsilon",
-    "ome" : "\\omega",
-    "xi" : "\\xi",
-    "psi" : "\\psi",
-    "ze" : "\\zeta",
-    "Al" : "\\Alpha",
-    "Be" : "\\Beta",
-    "Chi" : "\\Chi",
-    "Del" : "\\Delta",
-    // "Eps" : "\\Epsilon",
-    "Phi" : "\\Phi",
-    "Ga" : "\\Gamma",
-    // "Eta" : "\\Eta",
-    // "I" : "\\Iota",
-    "Ka" : "\\Kappa",
-    "Lam" : "\\Lambda",
-    "Mu" : "\\Mu",
-    "Nu" : "\\Nu",
-    "Omi" : "\\Omicron",
-    "Pi" : "\\Pi",
-    "The" : "\\Theta",
-    "Rho" : "\\Rho",
-    "Sig" : "\\Sigma",
-    "Tau" : "\\Tau",
-    // "U" : "\\Upsilon",
-    "Ome" : "\\Omega",
-    "Xi" : "\\Xi",
-    "Psi" : "\\Psi",
-    "Ze" : "\\Zeta",
+    "al" : "alpha",
+    "be" : "beta",
+    "chi" : "chi",
+    "del" : "delta",
+    "eps" : "varepsilon",
+    // "ve": "varepsilon",
+    "phi" : "phi",
+    // "vf" : "varphi",
+    "ga" : "gamma",
+    "eta" : "eta",
+    // "i" : "iota",
+    "vphi" : "varphi",
+    "ka" : "kappa",
+    "vka": "varkappa",
+    "lam" : "lambda",
+    "mu" : "mu",
+    "nu" : "nu",
+    "omi" : "omicron",
+    "pi" : "pi",
+    "vpi" : "varpi",
+    "the" : "theta",
+    "vthe" : "vartheta",
+    "rho" : "rho",
+    "sig" : "sigma",
+    "vsig" : "varsigma",
+    "tau" : "tau",
+    // "u" : "upsilon",
+    "ome" : "omega",
+    "xi" : "xi",
+    "psi" : "psi",
+    "ze" : "zeta",
+    "Al" : "Alpha",
+    "Be" : "Beta",
+    "Chi" : "Chi",
+    "Del" : "Delta",
+    // "Eps" : "Epsilon",
+    "Phi" : "Phi",
+    "Ga" : "Gamma",
+    // "Eta" : "Eta",
+    // "I" : "Iota",
+    "Ka" : "Kappa",
+    "Lam" : "Lambda",
+    "Mu" : "Mu",
+    "Nu" : "Nu",
+    "Omi" : "Omicron",
+    "Pi" : "Pi",
+    "The" : "Theta",
+    "Rho" : "Rho",
+    "Sig" : "Sigma",
+    "Tau" : "Tau",
+    // "U" : "Upsilon",
+    "Ome" : "Omega",
+    "Xi" : "Xi",
+    "Psi" : "Psi",
+    "Ze" : "Zeta",
 };
 
 const prefix = {
@@ -133,12 +200,12 @@ snippet `\b(?<!\\)(bar|til|hat)\b` "prefix by by VISUAL" iAm
 endsnippet
 
 snippet `\\(al|be|chi|del|eps|phi|ga|eta|vphi|ka|vka|lam|mu|nu|omi|pi|vpi|the|vthe|rho|sig|vsig|tau|ome|xi|psi|ze|Al|Be|Chi|Del|Phi|Ga|Ka|Lam|Mu|Nu|Omi|Pi|The|Rho|Sig|Tau|Ome|Xi|Psi|Ze)\b` "greek need \" iAm
-``rv = greek[m[1]]``
+\\``rv = greek[m[1]]``
 endsnippet
 
-#snippet `\b(?<!\\)(oo|grad|setm|of)\b` "prefix without \" iAm
-#\\``rv = prefix[m[1]]``
-#endsnippet
+snippet `\b(?<!\\)(exp|log|sin|cos|tan|cot|sec|csc)\b` "prefix without \" iAm
+\\``rv = m[1]``
+endsnippet
 
 snippet `\\(oo|grad|setm|of|dd|X)\b` "prefix need \" iAm
 \\``rv = prefix[m[1]]``
@@ -169,9 +236,13 @@ endsnippet
 #endsnippet
 
 
-snippet `([A-Za-z])(\d)` "auto subscript" iAm
+priority 100
+snippet `\b([A-Za-z])(\d)` "auto subscript" iAm
 `` rv = m[1] + "_" + m[2]``
 endsnippet
+
+
+
 
 
 snippet filename "Current Filename"
@@ -181,3 +252,44 @@ endsnippet
 #``rv=require("vscode").window.activeTextEditor.document.fileName``
 
 
+# ==== Dynamic Matrix ====
+
+priority 300
+snippet `(b|p|v)mata([1-9])` "bmatrix" iiAm
+\\begin{``rv = m[1]``matrix}``
+	let len = m[2];
+	let results = "";
+	for (var i=0; i<len; i++){
+		results += "$1 &".repeat(len-1) + " $1 \\\\\\\\";
+	}
+	rv = results;
+``\\end{``rv = m[1]``matrix}$0
+endsnippet
+
+priority 300
+snippet `(b|p|v)mat([1-9])([1-9])` "bmatrix" iiAm
+\\begin{``rv = m[1]``matrix}``
+	rv = gen_matrix(m[2],m[3]);
+``\\end{``rv = m[1]``matrix}$0
+endsnippet
+
+priority 2000
+snippet `(b|p|v)matr([1-9]{1})` "bmatrix" iiAm
+\\begin{``rv = m[1]``matrix}``
+	rv = gen_matrix_transposed(m[2],m[2]);
+``\\end{``rv = m[1]``matrix}$0
+endsnippet
+
+priority 300
+snippet `vec([1-9])` "col vector" iiAm
+\\begin{bmatrix}``
+    rv = gen_matrix(m[1], 1);
+``\\end{bmatrix}$0
+endsnippet
+
+priority 300
+snippet `vecr([1-9])` "row vector" iiAm
+\\begin{bmatrix}``
+    rv = gen_matrix(1, m[1]);
+``\\end{bmatrix}$0
+endsnippet
