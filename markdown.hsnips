@@ -179,6 +179,18 @@ snippet d// "Fraction" iAm
 \\dfrac{${1:${VISUAL}}}{$2}$0
 endsnippet
 
+snippet __ "underline" iAm
+\\underline{${1:${VISUAL}}}$0
+endsnippet
+
+snippet ^^ "underline" iAm
+\\overline{${1:${VISUAL}}}$0
+endsnippet
+
+snippet ~~ "underline" iAm
+\\widetilde{${1:${VISUAL}}}$0
+endsnippet
+
 snippet `\b(?<!\\)(bb|bf|cal|rm|frak|tt|opn)\b` "mathbb by VISUAL" iAm
 \\``rv=prefixmath[m[1]]``{${1:${VISUAL}}}$0
 endsnippet
@@ -216,6 +228,10 @@ snippet \... "prefix need \" iAm
 \\cdots
 endsnippet
 
+snippet of "prefix without \" iAm
+\\circ
+endsnippet
+
 #snippet til "til" iAm
 #snippet `([^\\])(til)` "bar" iAm
 #``rv = m[1]``\\widetilde{${VISUAL}$1}
@@ -240,10 +256,6 @@ priority 100
 snippet `\b([A-Za-z])(\d)` "auto subscript" iAm
 `` rv = m[1] + "_" + m[2]``
 endsnippet
-
-
-
-
 
 snippet filename "Current Filename"
 ``rv = require('path').basename(path)``
