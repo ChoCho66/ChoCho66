@@ -70,58 +70,58 @@ function createTable(rows, cols) {
 const greek  = {
     "al" : "alpha",
     "be" : "beta",
-    "chi" : "chi",
+    // "chi" : "chi",
     "del" : "delta",
     "eps" : "varepsilon",
     // "ve": "varepsilon",
-    "phi" : "phi",
+    // "phi" : "phi",
     // "vf" : "varphi",
     "ga" : "gamma",
-    "eta" : "eta",
+    // "eta" : "eta",
     // "i" : "iota",
     "vphi" : "varphi",
     "ka" : "kappa",
     "vka": "varkappa",
     "lam" : "lambda",
-    "mu" : "mu",
-    "nu" : "nu",
+    // "mu" : "mu",
+    // "nu" : "nu",
     "omi" : "omicron",
-    "pi" : "pi",
+    // "pi" : "pi",
     "vpi" : "varpi",
     "the" : "theta",
     "vthe" : "vartheta",
-    "rho" : "rho",
+    // "rho" : "rho",
     "sig" : "sigma",
     "vsig" : "varsigma",
-    "tau" : "tau",
+    // "tau" : "tau",
     // "u" : "upsilon",
     "ome" : "omega",
-    "xi" : "xi",
-    "psi" : "psi",
+    // "xi" : "xi",
+    // "psi" : "psi",
     "ze" : "zeta",
     "Al" : "Alpha",
     "Be" : "Beta",
-    "Chi" : "Chi",
+    // "Chi" : "Chi",
     "Del" : "Delta",
     // "Eps" : "Epsilon",
-    "Phi" : "Phi",
+    // "Phi" : "Phi",
     "Ga" : "Gamma",
     // "Eta" : "Eta",
     // "I" : "Iota",
     "Ka" : "Kappa",
     "Lam" : "Lambda",
-    "Mu" : "Mu",
-    "Nu" : "Nu",
+    // "Mu" : "Mu",
+    // "Nu" : "Nu",
     "Omi" : "Omicron",
-    "Pi" : "Pi",
+    // "Pi" : "Pi",
     "The" : "Theta",
-    "Rho" : "Rho",
+    // "Rho" : "Rho",
     "Sig" : "Sigma",
-    "Tau" : "Tau",
+    // "Tau" : "Tau",
     // "U" : "Upsilon",
     "Ome" : "Omega",
-    "Xi" : "Xi",
-    "Psi" : "Psi",
+    // "Xi" : "Xi",
+    // "Psi" : "Psi",
     "Ze" : "Zeta",
 };
 
@@ -129,8 +129,7 @@ const prefix = {
   "bar" : "overline",
   "til" : "widetilde",
   "hat" : "widehat",
-  //
-  // "..." : "cdots",
+  "..." : "cdots",
   "oo" : "infty",
   "X" : "times",
   "grad" : "nabla",
@@ -162,11 +161,40 @@ const prefixmath = {
   "opn" : "operatorname",
 };
 
+const arrow = {
+  "->" : "rightarrow",
+  "<-" : "leftarrow",
+  "-->" : "longrightarrow",
+  "=>" : "implies",
+  "<~" : "lesssim",
+  ">~" : "gtrsim",
+  "~=" : "approx",
+  ">=" : "geq",
+  "<=" : "leq",
+  "!=" : "neq",
+  "==" : "equiv",
+};
+
 endglobal
 
 
 
 # == Some notation ==
+
+#snippet `([a-z]*)::` iA
+#``rv=m[1]``(${VISUAL})$0
+#endsnippet
+
+#snippet $$ "$$" iAm
+#$$
+#${1:${VISUAL}}
+#$$
+#$0
+#endsnippet
+
+snippet \qu "quad" iAm
+\quad
+endsnippet
 
 priority 200
 snippet // "Fraction" iAm
@@ -179,16 +207,50 @@ snippet d// "Fraction" iAm
 \\dfrac{${1:${VISUAL}}}{$2}$0
 endsnippet
 
+snippet _~ "underbrace" iAm
+\\underbrace{${1:${VISUAL}}}_{$2}$0
+endsnippet
+
 snippet __ "underline" iAm
 \\underline{${1:${VISUAL}}}$0
 endsnippet
 
-snippet ^^ "underline" iAm
+snippet ^^ "overline" iAm
 \\overline{${1:${VISUAL}}}$0
 endsnippet
 
-snippet ~~ "underline" iAm
+snippet ~~ "widetilde" iAm
 \\widetilde{${1:${VISUAL}}}$0
+endsnippet
+
+snippet `(?<!\|)\| \|(?!\|)` "abs" iAm
+\\left\\lvert ${1:${VISUAL}}$2 \\right\\rvert
+endsnippet
+
+priority 100
+snippet `\\\|` "vert" iAm
+\\vert
+endsnippet
+
+priority 300
+snippet `\\\\\|` "vert" iAm
+\\Vert
+endsnippet
+
+snippet `\|\| \|\|` "norm" iAm
+\\left\\lVert ${1:${VISUAL}}$2 \\right\\rVert
+endsnippet
+
+snippet `(->|<-|-->|=>|<~|>~|~=|>=|<=|!=|~=|==)` "arrow" iAm
+\\``rv=arrow[m[1]]``
+endsnippet
+
+snippet `\b(?<!\\)([a-zA-Z]*)text\b` "text" iAm
+\\text{``rv=m[1]``${1:${VISUAL}}}$0
+endsnippet
+
+snippet `\b(?<!\\)([a-zA-Z]*)(red|blue)\b` "color" iAm
+\\color{``rv=m[2]``}{``rv=m[1]``${1:${VISUAL}}}$0
 endsnippet
 
 snippet `\b(?<!\\)(bb|bf|cal|rm|frak|tt|opn)\b` "mathbb by VISUAL" iAm
@@ -211,7 +273,7 @@ snippet `\b(?<!\\)(bar|til|hat)\b` "prefix by by VISUAL" iAm
 \\``rv = prefix[m[1]]``{${VISUAL}$1}
 endsnippet
 
-snippet `\\(al|be|chi|del|eps|phi|ga|eta|vphi|ka|vka|lam|mu|nu|omi|pi|vpi|the|vthe|rho|sig|vsig|tau|ome|xi|psi|ze|Al|Be|Chi|Del|Phi|Ga|Ka|Lam|Mu|Nu|Omi|Pi|The|Rho|Sig|Tau|Ome|Xi|Psi|Ze)\b` "greek need \" iAm
+snippet `\\(al|be|del|eps|ga|vphi|ka|vka|lam|omi|vpi|the|vthe|sig|vsig|ome|ze|Al|Be|Del|Ga|Ka|Lam|Omi|The|Sig|Ome|Ze)\b` "greek need \" iAm
 \\``rv = greek[m[1]]``
 endsnippet
 
@@ -222,10 +284,17 @@ endsnippet
 snippet `\\(oo|grad|setm|of|dd|X)\b` "prefix need \" iAm
 \\``rv = prefix[m[1]]``
 endsnippet
+
 #snippet `(?<!\S)\\(d|X)\b` "prefix need \" iAm
+
+
 
 snippet \... "prefix need \" iAm
 \\cdots
+endsnippet
+
+snippet `\\*sqrt` "sqrt" iAm
+\\sqrt{${1:${VISUAL}}}$2
 endsnippet
 
 snippet of "prefix without \" iAm
@@ -304,4 +373,18 @@ snippet `vecr([1-9])` "row vector" iiAm
 \\begin{bmatrix}``
     rv = gen_matrix(1, m[1]);
 ``\\end{bmatrix}$0
+endsnippet
+
+snippet cases "cases" iiAm
+\\begin{cases}
+  $1
+\\end{cases}$0
+endsnippet
+
+snippet `d(s|t|x|y|z|u|v)` "dt" iiAm
+\\mathrm{d}``rv=m[1]``
+endsnippet
+
+snippet `d([A-Z])(s|t)` "dBt" iiAm
+\\mathrm{d}``rv=m[1]``_``rv=m[2]``
 endsnippet
