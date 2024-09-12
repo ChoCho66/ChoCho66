@@ -1,0 +1,6 @@
+div.note,
+div.thm {
+  border: 2px solid #000; /* 添加邊框 */
+  padding: 10px; /* 四周留出空間 */
+  padding-right: 30px; /* 右邊留出30px的距離 */
+}
